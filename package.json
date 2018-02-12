@@ -1,0 +1,24 @@
+{
+  "name": "player.js",
+  "version": "1.0.0",
+  "description": "Streaming music player based on HTML5 and JavaScript technologies.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mukulmishra18/Player.js.git"
+  },
+  "author": "Mukul Mishra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mukulmishra18/Player.js/issues"
+  },
+  "homepage": "https://github.com/mukulmishra18/Player.js#readme",
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "webpack": "^3.11.0"
+  }
+}
