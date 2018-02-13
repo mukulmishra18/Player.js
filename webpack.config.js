@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: './src/player.js',
@@ -10,9 +11,17 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /src\/**\.js$/,
+        test: /src\/*\.js$/,
         loaders: 'babel-loader'
       }
     ]
-  }
+  },
+  resolve: {
+    extensions: [' ', '.js', '.es6']
+  },
+  plugins: [
+    new CopyWebpackPlugin([
+      { from: './src/external' }
+    ])
+  ]
 };

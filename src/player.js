@@ -1,5 +1,5 @@
-import { StorageController } from 'storageController';
-import { StreamController } from 'streamController';
+import StorageController from './storageController';
+import StreamController from './streamController';
 
 /**
  * Main entry point of player.
