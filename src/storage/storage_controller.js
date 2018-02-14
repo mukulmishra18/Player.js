@@ -1,4 +1,4 @@
-import createPromiseCapability from './helper/promiseHelper';
+import createPromiseCapability from '../util/promise_capability';
 
 /**
  * Player browser storage controller.

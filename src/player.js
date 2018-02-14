@@ -1,24 +1,42 @@
-import StorageController from './storage/storageController';
-import StreamController from './stream/streamController';
-
+import StorageController from './storage/storage_controller';
+import StreamController from './stream/stream_controller';
+import AudioEventHandler from './event_handler';
 /**
  * Main entry point of player.
  * @class
  */
-export default class Player {
+export class Player {
   /**
    * @constructs Player
    * @params { File } files
    */
   constructor(files) {
-    let file = files[0];
+    this._audioElement = null;
+    this._file = null;
+  }
+
+  /**
+   * Attach HTML Audio element to the player;
+   * @params {HTML Audio} audio
+   */
+  attachAudioElement(audio) {
+    this._audioElement = audio;
+  }
+
+  /**
+   * Attach audio data file to player.
+   * @params {File} files
+   */
+  attachDataFile(files) {
+    this._file = files[0];
     this._fileData = file.slice();
     this._fileLastModificationDate = file.lastModificationDate;
     this._fileName = file.name;
     this._fileType = file.type;
     this._fileSize = file.size;
     this._storageCtrl = new StorageController(this._fileData);
-    this._streamCtrl = new StreamController();
+    this._streamCtrl = new StreamController(this._storageCtrl);
+    this._audioEventHandler = new AudioEventHandler(this._audioElement, this._streamCtrl);
   }
 
   /**
@@ -30,9 +48,9 @@ export default class Player {
   }
 
   /**
-   * Cancel the player and clean up memory.
+   * Destroy the player and clean up memory.
    */
-  cancel() {
+  destroy() {
 
   }
 }

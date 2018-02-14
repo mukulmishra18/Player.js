@@ -6,7 +6,8 @@ module.exports = {
   entry: './src/player.js',
   output: {
     path: path.resolve('dist'),
-    filename: 'player.js'
+    filename: 'player.js',
+    libraryTarget: 'commonjs'
   },
   module: {
     loaders: [
