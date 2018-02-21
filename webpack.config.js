@@ -1,4 +1,3 @@
-var webpack = require('webpack');
 var path = require('path');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -7,23 +6,23 @@ module.exports = {
   output: {
     path: path.resolve('dist'),
     filename: 'player.js',
-    libraryTarget: 'commonjs'
+    libraryTarget: 'commonjs',
   },
   module: {
     loaders: [
       {
         test: /\.js$/,
         exclude: /node_module/,
-        loaders: 'babel-loader'
-      }
-    ]
+        loaders: 'babel-loader',
+      },
+    ],
   },
   resolve: {
-    extensions: [' ', '.js', '.es6']
+    extensions: [' ', '.js', '.es6'],
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: './src/external' }
-    ])
-  ]
+      { from: './src/external' },
+    ]),
+  ],
 };

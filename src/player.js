@@ -1,3 +1,5 @@
+/* global AudioContext, MediaSource, URL */
+
 import StorageController from './storage/storage_controller';
 import StreamController from './stream/stream_controller';
 import AudioEventHandler from './event_handler';
@@ -35,11 +37,11 @@ export class Player {
    */
   attachDataFile(files) {
     this._file = files[0];
-    this._fileData = file.slice();
-    this._fileLastModificationDate = file.lastModificationDate;
-    this._fileName = file.name;
-    this._fileType = file.type;
-    this._fileSize = file.size;
+    this._fileData = this._file.slice();
+    this._fileLastModificationDate = this._file.lastModificationDate;
+    this._fileName = this._file.name;
+    this._fileType = this._file.type;
+    this._fileSize = this._file.size;
     this._storageCtrl = new StorageController(this._fileData);
     this._streamCtrl = new StreamController(this._storageCtrl);
   }
@@ -50,7 +52,8 @@ export class Player {
   }
 
   _attachAudioContextToDestination() {
-    this._source = this._audioContext.createMediaElementSource(this._audioElement);
+    this._source =
+      this._audioContext.createMediaElementSource(this._audioElement);
     this._destination = this._audioContext.destination;
     this._gainNode = this._audioContext.createGain();
 
@@ -63,9 +66,7 @@ export class Player {
   _onSourceOpen() {
     this._sourceBuffer = this._mediaSource.addSourceBuffer(this.mimeType);
     this._audioEventHandler = new AudioEventHandler(this._audioElement,
-                                                    this._streamCtrl,
-                                                    this._mediaSource,
-                                                    this._sourceBuffer);
+      this._streamCtrl, this._mediaSource, this._sourceBuffer);
   }
 
   /**

@@ -12,12 +12,12 @@ export class AudioEventHandler {
   }
 
   _onTimeUpdate() {
-    return this._streamCtrl.getChunk().then(function (chunk) {
+    return this._streamCtrl.getChunk().then(function(chunk) {
       if (chunk) {
         return this._sourceBuffer.appendBuffer(chunk);
       }
       return this._mediaSource.endOfStream();
-    }).catch(function (error) {
+    }).catch(function(error) {
       return error;
     });
   }
