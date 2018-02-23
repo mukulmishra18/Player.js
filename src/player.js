@@ -10,9 +10,8 @@ import AudioEventHandler from './event_handler';
 export class Player {
   /**
    * @constructs Player
-   * @params { File } files
    */
-  constructor(files) {
+  constructor() {
     // At the initial version we only support mp3.
     this.mimeType = 'audio/mpeg';
     this._audioElement = null;

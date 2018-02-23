@@ -29,9 +29,13 @@ export class StorageController {
     });
   }
 
-  post(title) {
+  /**
+   * Create a new document with the given metadata.
+   * @return { Promise }
+   */
+  post() {
     let postCapability = createPromiseCapability();
-    this._storageInstance.post({ title }).push((id) => {
+    this._storageInstance.post({ title: 'enclosure' }).push((id) => {
       this._storageID = id;
       postCapability.resolve();
     }).push(undefined, function(error) {
@@ -41,10 +45,28 @@ export class StorageController {
     return postCapability.promise;
   }
 
-  putAttachment() {
+  /**
+   * Get metadata from metadata store.
+   * @return { Promise }
+   */
+  getMetaData() {
+    let getMetadataCapability = createPromiseCapability();
+    this._storageInstance.get(this._storageID).push(function(metadata) {
+      getMetadataCapability.resolve(metadata);
+    }).push(undefined, function(error) {
+      getMetadataCapability.reject(error);
+    });
+
+    return getMetadataCapability.promise;
+  }
+
+  /**
+   * Put given data in `Metadata` store of IDB.
+   * @return { Promise }
+   */
+  put(data) {
     let putCapability = createPromiseCapability();
-    this._storageInstance.putAttachment(this._storageID, this._storageID,
-      this._fileData).push(function() {
+    this._storageInstance.put(this._storageID, data).push(function() {
       putCapability.resolve();
     }).push(undefined, function(error) {
       putCapability.reject(error);
@@ -53,9 +75,29 @@ export class StorageController {
     return putCapability.promise;
   }
 
+  /**
+   * Put attachment in `Attachment` store of IDB.
+   * @return { Promise }
+   */
+  putAttachment() {
+    let putAttachmentCapability = createPromiseCapability();
+    this._storageInstance.putAttachment(this._storageID, 'enclosure',
+      this._fileData).push(function() {
+      putAttachmentCapability.resolve();
+    }).push(undefined, function(error) {
+      putAttachmentCapability.reject(error);
+    });
+
+    return putAttachmentCapability.promise;
+  }
+
+  /**
+   * Get attachment from `Attachment` store of IDB.
+   * @return { Promise }
+   */
   getAttachment({ start, end }) {
     let getCapability = createPromiseCapability();
-    this._storageInstance.getAttachment(this._storageID, this._storageID,
+    this._storageInstance.getAttachment(this._storageID, 'enclosure',
       { start, end }).push(function(data) {
       getCapability.resolve(data);
     }).push(undefined, function(error) {
@@ -65,6 +107,9 @@ export class StorageController {
     return getCapability.promise;
   }
 
+  /**
+   * Cancel StorageController.
+   */
   cancel() {
 
   }
