@@ -37,12 +37,23 @@ export class Player {
   attachDataFile(files) {
     this._file = files[0];
     this._fileData = this._file.slice();
-    this._fileLastModificationDate = this._file.lastModificationDate;
+    this._fileLastModifiedDate = this._file.lastModifiedDate;
     this._fileName = this._file.name;
     this._fileType = this._file.type;
     this._fileSize = this._file.size;
-    this._storageCtrl = new StorageController(this._fileData);
+    this._storageCtrl = new StorageController({
+      name: this._fileName,
+      size: this._fileSize,
+      type: this._fileType,
+      data: this._fileData,
+      lastModifiedDate: this._fileLastModifiedDate,
+    });
     this._streamCtrl = new StreamController(this._storageCtrl);
+    return this._storageCtrl.post().then(() => {
+      return this._storageCtrl.put();
+    }).then(() => {
+      return this._storageCtrl.putAttachment();
+    });
   }
 
   _attchAudioElementToMediaSource() {

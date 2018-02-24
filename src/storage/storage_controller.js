@@ -6,12 +6,16 @@ import createPromiseCapability from '../util/promise_capability';
  * Player browser storage controller.
  * @class
  */
-export class StorageController {
+export default class StorageController {
   /**
    * @constructs StorageController
    */
-  constructor(fileData) {
-    this._fileData = fileData;
+  constructor({ name, size, type, data, lastModifiedDate }) {
+    this._fileName = name;
+    this._fileSize = size;
+    this._fileType = type;
+    this._fileData = data;
+    this._fileLastModifiedDate = lastModifiedDate;
     this._storageID = null;
     /**
      * global jIO
@@ -64,9 +68,14 @@ export class StorageController {
    * Put given data in `Metadata` store of IDB.
    * @return { Promise }
    */
-  put(data) {
+  put() {
     let putCapability = createPromiseCapability();
-    this._storageInstance.put(this._storageID, data).push(function() {
+    this._storageInstance.put(this._storageID, {
+      name: this._fileName,
+      size: this._fileSize,
+      type: this._fileType,
+      lastModifiedDate: this._fileLastModifiedDate,
+    }).push(function() {
       putCapability.resolve();
     }).push(undefined, function(error) {
       putCapability.reject(error);

@@ -6,7 +6,7 @@ module.exports = {
   output: {
     path: path.resolve('dist'),
     filename: 'player.js',
-    libraryTarget: 'commonjs',
+    libraryTarget: 'umd',
   },
   module: {
     loaders: [

@@ -4,7 +4,7 @@
  * Promise capability helper.
  */
 
-export function createPromiseCapability() {
+export default function createPromiseCapability() {
   let capability = {};
   capability.promise = new Promise(function(resolve, reject) {
     capability.resolve = resolve;
