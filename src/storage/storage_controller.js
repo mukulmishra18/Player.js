@@ -41,9 +41,9 @@ export default class StorageController {
     let postCapability = createPromiseCapability();
     this._storageInstance.post({ title: 'enclosure' }).push((id) => {
       this._storageID = id;
-      postCapability.resolve();
+      return postCapability.resolve();
     }).push(undefined, function(error) {
-      postCapability.reject(error);
+      return postCapability.reject(error);
     });
 
     return postCapability.promise;
@@ -56,9 +56,9 @@ export default class StorageController {
   getMetaData() {
     let getMetadataCapability = createPromiseCapability();
     this._storageInstance.get(this._storageID).push(function(metadata) {
-      getMetadataCapability.resolve(metadata);
+      return getMetadataCapability.resolve(metadata);
     }).push(undefined, function(error) {
-      getMetadataCapability.reject(error);
+      return getMetadataCapability.reject(error);
     });
 
     return getMetadataCapability.promise;
@@ -76,9 +76,9 @@ export default class StorageController {
       type: this._fileType,
       lastModifiedDate: this._fileLastModifiedDate,
     }).push(function() {
-      putCapability.resolve();
+      return putCapability.resolve();
     }).push(undefined, function(error) {
-      putCapability.reject(error);
+      return putCapability.reject(error);
     });
 
     return putCapability.promise;
@@ -92,9 +92,9 @@ export default class StorageController {
     let putAttachmentCapability = createPromiseCapability();
     this._storageInstance.putAttachment(this._storageID, 'enclosure',
       this._fileData).push(function() {
-      putAttachmentCapability.resolve();
+      return putAttachmentCapability.resolve();
     }).push(undefined, function(error) {
-      putAttachmentCapability.reject(error);
+      return putAttachmentCapability.reject(error);
     });
 
     return putAttachmentCapability.promise;
@@ -108,9 +108,9 @@ export default class StorageController {
     let getCapability = createPromiseCapability();
     this._storageInstance.getAttachment(this._storageID, 'enclosure',
       { start, end }).push(function(data) {
-      getCapability.resolve(data);
+      return getCapability.resolve(data);
     }).push(undefined, function(error) {
-      getCapability.reject(error);
+      return getCapability.reject(error);
     });
 
     return getCapability.promise;

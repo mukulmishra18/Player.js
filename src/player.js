@@ -49,11 +49,6 @@ export class Player {
       lastModifiedDate: this._fileLastModifiedDate,
     });
     this._streamCtrl = new StreamController(this._storageCtrl);
-    return this._storageCtrl.post().then(() => {
-      return this._storageCtrl.put();
-    }).then(() => {
-      return this._storageCtrl.putAttachment();
-    });
   }
 
   _attchAudioElementToMediaSource() {
